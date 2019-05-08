@@ -5,6 +5,7 @@ const app = express();
 // Connect MongoDB
 connectDB();
 const users = require("./routes/api/users");
+app.use(express.json({ extends: false }));
 app.get("/", (req, res) => res.send("API running"));
 app.use("/api/users", users);
 app.use("/api/profile", require("./routes/api/profile"));
