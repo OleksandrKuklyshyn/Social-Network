@@ -5,7 +5,7 @@ const { check, validationResult } = require("express-validator/check");
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 
-router.get("/me", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id }).populate(
       "user",
@@ -66,15 +66,15 @@ router.post(
   }
 );
 
-router.get("/", async (req, res) => {
-  try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-    res.json(profiles);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
+// router.get("/", async (req, res) => {
+//   try {
+//     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+//     res.json(profiles);
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).send("Server Error");
+//   }
+// });
 
 router.get("/user/:user_id", async (req, res) => {
   try {
