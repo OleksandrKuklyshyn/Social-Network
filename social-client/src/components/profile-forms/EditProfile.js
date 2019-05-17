@@ -1,24 +1,40 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createProfile } from "../../actions/profile";
+import { createProfile, getCurrentProfile } from "../../actions/profile";
 
-const CreateProfile = ({ createProfile, history }) => {
+const EditProfile = ({
+  profile: { profile, loading },
+  createProfile,
+  getCurrentProfile,
+  history
+}) => {
   const [formData, setFormData] = useState({
-    company: "",
-    bio: "",
     status: "",
+    company: "",
     location: "",
-    skills: ""
+    skills: "",
+    bio: ""
   });
-  const { company, bio, status, location, skills } = formData;
+  const { status, company, location, skills, bio } = formData;
+
+  useEffect(() => {
+    getCurrentProfile();
+    setFormData({
+      company: loading || !profile.company ? "" : profile.company,
+      status: loading || !profile.status ? "" : profile.status,
+      location: loading || !profile.location ? "" : profile.location,
+      bio: loading || !profile.bio ? "" : profile.bio,
+      skills: loading || !profile.skills ? "" : profile.skills.join(",")
+    });
+  }, [loading, getCurrentProfile]);
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history);
+    createProfile(formData, history, true);
   };
 
   return (
@@ -101,11 +117,16 @@ const CreateProfile = ({ createProfile, history }) => {
   );
 };
 
-CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired
+EditProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired
 };
+const mapStateToProps = state => ({
+  profile: state.profile
+});
 
 export default connect(
-  null,
-  { createProfile }
-)(withRouter(CreateProfile));
+  mapStateToProps,
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));
