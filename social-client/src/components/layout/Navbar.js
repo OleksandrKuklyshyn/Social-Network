@@ -21,7 +21,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       </li>
       <li>
         <Link to="/posts">
-          <i class="fas fa-envelope-open-text" />
+          <i className="fas fa-envelope-open-text" />
           <span className="hide-sm">Posts</span>
         </Link>
       </li>
