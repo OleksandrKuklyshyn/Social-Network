@@ -20,7 +20,7 @@ const EditProfile = ({
   const { status, company, location, skills, bio } = formData;
 
   useEffect(() => {
-    getCurrentProfile();
+    // getCurrentProfile();
     setFormData({
       company: loading || !profile.company ? "" : profile.company,
       status: loading || !profile.status ? "" : profile.status,
@@ -28,10 +28,21 @@ const EditProfile = ({
       bio: loading || !profile.bio ? "" : profile.bio,
       skills: loading || !profile.skills ? "" : profile.skills.join(",")
     });
-  }, [loading, getCurrentProfile]);
+  }, [
+    loading,
+    getCurrentProfile,
+    profile.bio,
+    profile.company,
 
-  const onChange = e =>
+    profile.location,
+    profile.skills,
+
+    profile.status
+  ]);
+
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const onSubmit = e => {
     e.preventDefault();
     createProfile(formData, history, true);

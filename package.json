@@ -21,7 +21,6 @@
     "server": "nodemon server",
     "client": "npm start --prefix social-client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
-
   },
   "repository": {
     "type": "git",
