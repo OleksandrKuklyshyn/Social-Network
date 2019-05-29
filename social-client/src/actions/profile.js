@@ -13,6 +13,7 @@ import {
 
 export const getCurrentProfile = () => async dispatch => {
   const res = await axios.get("/api/profile/me");
+  console.log(res);
   try {
     dispatch({
       type: GET_PROFILE,

@@ -28,15 +28,7 @@ const EditProfile = ({
       bio: loading || !profile.bio ? "" : profile.bio,
       skills: loading || !profile.skills ? "" : profile.skills.join(",")
     });
-  }, [
-    loading,
-    getCurrentProfile,
-    profile.company,
-    profile.bio,
-    profile.location,
-    profile.status,
-    profile.skills
-  ]);
+  }, [loading, getCurrentProfile]);
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -116,9 +108,8 @@ const EditProfile = ({
           <small className="form-text">Tell us a little about yourself</small>
         </div>
 
-        <button type="submit" className="btn btn-primary my-1">
-          Submit
-        </button>
+        <input type="submit" className="btn btn-primary my-1" value="Submit" />
+
         <Link className="btn btn-light my-1" to="/dashboard">
           Go Back
         </Link>
